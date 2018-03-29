@@ -47,6 +47,7 @@
 (require 'cl-lib)
 
 (defvar latex-preview-pane-current-version "20151021")
+(defvar split-horizontally t)
 ;;
 ;; Get rid of free variables warnings
 ;;
@@ -91,7 +92,9 @@
         (set-window-parameter
          (if latex-preview-pane-use-frame
              (car (window-list (make-frame)))
-           (split-window nil nil preview-orientation))
+           (if split-horizontally
+               (split-window-horizontally nil nil preview-orientation)
+             (split-window-vertically nil nil preview-orientation)))
          'is-latex-preview-pane t))
     (lpp/display-startup (lpp/window-containing-preview))
     ;; add the save hook
